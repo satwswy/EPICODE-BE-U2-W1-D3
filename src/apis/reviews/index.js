@@ -1,6 +1,7 @@
 import express, { query } from "express";
 import Review from "./modal.js";
 import sequelize from "../../db/index.js";
+import User from "../users/modal.js";
 
 
 const router = express.Router();
@@ -8,7 +9,9 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
    
-    const reviews = await Review.findAll();
+    const reviews = await Review.findAll({
+        include: User
+    });
 
     res.send(reviews);
   } catch (error) {

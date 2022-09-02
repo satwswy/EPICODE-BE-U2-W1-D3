@@ -5,7 +5,13 @@ import productsRouter from "./apis/products/index.js"
 import usersRouter from "./apis/users/index.js"
 import categoriesRouter from "./apis/categories/index.js"
 import reviewsRouter from "./apis/reviews/index.js"
+import User from "./apis/users/modal.js"
+import Category from "./apis/categories/modal.js";
+import Product from "./apis/products/modal.js";
+import Review from "./apis/reviews/modal.js";
 
+User.hasMany(Review);
+Review.belongsTo(User);
 
 const server = express();
 
@@ -13,6 +19,9 @@ server.use(express.json());
 
 server.use(cors());
 server.use("/products", productsRouter);
+server.use("/users", usersRouter);
+server.use("/categories", categoriesRouter);
+server.use("/reviews", reviewsRouter);
 
 const { PORT = 4001 } = process.env;
 
@@ -33,7 +42,7 @@ const initalize = async () => {
   
   authenticateDB()
     .then(async () => {
-      await syncModels({force:true});
+      await syncModels();
     })
     .then(() => {
       initalize();
