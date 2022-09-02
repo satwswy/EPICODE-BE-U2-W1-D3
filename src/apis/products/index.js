@@ -4,6 +4,7 @@ import sequelize from "../../db/index.js";
 import ProductCategory from "./productCategoriesModel.js";
 import Category from "../categories/modal.js";
 import Review from "../reviews/modal.js";
+import { Op } from "sequelize";
 
 
 const router = express.Router();

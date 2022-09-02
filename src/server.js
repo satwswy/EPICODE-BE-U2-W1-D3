@@ -46,7 +46,7 @@ const initalize = async () => {
   
   authenticateDB()
     .then(async () => {
-      await syncModels();
+      await syncModels({alter:true});
     })
     .then(() => {
       initalize();
