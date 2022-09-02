@@ -2,6 +2,10 @@ import express from "express";
 import { authenticateDB, syncModels } from "./db/index.js";
 import cors from "cors";
 import productsRouter from "./apis/products/index.js"
+import usersRouter from "./apis/users/index.js"
+import categoriesRouter from "./apis/categories/index.js"
+import reviewsRouter from "./apis/reviews/index.js"
+
 
 const server = express();
 
@@ -29,7 +33,7 @@ const initalize = async () => {
   
   authenticateDB()
     .then(async () => {
-      await syncModels();
+      await syncModels({force:true});
     })
     .then(() => {
       initalize();
