@@ -10,7 +10,22 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-   
+    const query = {};
+    if (req.query.name) {
+      query.name = {
+        [Op.iLike]: `%${req.query.name}%`,
+      };
+    }
+    if (req.query.price) {
+      query.price = {
+        [Op.between]: req.query.price.split(","),
+      };
+    }
+    if (req.query.category) {
+      query.category = {
+        [Op.in]: req.query.category.split(","),
+      };
+    }
     const products = await Product.findAll({
       include: [
         Review,
@@ -20,6 +35,7 @@ router.get("/", async (req, res, next) => {
           through: { attributes: [] },
         },
       ],
+      where:query,
     });
 
     
