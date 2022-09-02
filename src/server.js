@@ -14,6 +14,9 @@ import ProductCategory from "./apis/products/productCategoriesModel.js"
 User.hasMany(Review);
 Review.belongsTo(User);
 
+Product.hasMany(Review);
+Review.belongsTo(Product);
+
 Category.belongsToMany(Product, {through: ProductCategory })
 Product.belongsToMany(Category, {through: ProductCategory})
 
@@ -46,7 +49,7 @@ const initalize = async () => {
   
   authenticateDB()
     .then(async () => {
-      await syncModels({alter:true});
+      await syncModels();
     })
     .then(() => {
       initalize();
