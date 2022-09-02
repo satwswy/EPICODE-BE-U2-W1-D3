@@ -3,6 +3,7 @@ import Product from "./modal.js";
 import sequelize from "../../db/index.js";
 import ProductCategory from "./productCategoriesModel.js";
 import Category from "../categories/modal.js";
+import Review from "../reviews/modal.js";
 
 
 const router = express.Router();
@@ -11,8 +12,14 @@ router.get("/", async (req, res, next) => {
   try {
    
     const products = await Product.findAll({
-      attributes: ["name", "category", "description", "price"],
-     
+      include: [
+        Review,
+        {
+          model: Category,
+          attributes: ["name", "id"],
+          through: { attributes: [] },
+        },
+      ],
     });
 
     
