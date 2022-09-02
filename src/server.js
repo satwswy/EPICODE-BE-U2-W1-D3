@@ -9,9 +9,13 @@ import User from "./apis/users/modal.js"
 import Category from "./apis/categories/modal.js";
 import Product from "./apis/products/modal.js";
 import Review from "./apis/reviews/modal.js";
+import ProductCategory from "./apis/products/productCategoriesModel.js"
 
 User.hasMany(Review);
 Review.belongsTo(User);
+
+Category.belongsToMany(Product, {through: ProductCategory })
+Product.belongsToMany(Category, {through: ProductCategory})
 
 const server = express();
 

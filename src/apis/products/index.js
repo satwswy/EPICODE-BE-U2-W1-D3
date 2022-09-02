@@ -1,6 +1,8 @@
 import express, { query } from "express";
 import Product from "./modal.js";
 import sequelize from "../../db/index.js";
+import ProductCategory from "./productCategoriesModel.js";
+import Category from "../categories/modal.js";
 
 
 const router = express.Router();
@@ -69,6 +71,34 @@ router.delete("/:id", async (req, res, next) => {
   } catch (error) {
     console.log(error);
     next(error);
+  }
+});
+
+router.post("/:productId/add/:categoryId", async (req, res, next) => {
+  try {
+    const result = await ProductCategory.create({
+      categoryId: req.params.categoryId,
+      productId: req.params.productId,
+    });
+
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+router.delete("/:productId/delete/:categoryId", async (req, res, next) => {
+  try {
+    const result = await ProductCategory.destroy({
+      where: {
+        categoryId: req.params.categoryId,
+        productId: req.params.productId,
+      },
+    });
+    res.send({ rows: result });
+  } catch (error) {
+    console.log(error);
   }
 });
 
