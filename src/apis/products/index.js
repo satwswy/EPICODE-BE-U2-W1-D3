@@ -27,14 +27,14 @@ router.get("/", async (req, res, next) => {
       };
     }
     const products = await Product.findAll({
-      include: [
-        Review,
+      include: 
+        
         {
           model: Category,
           attributes: ["name", "id"],
           through: { attributes: [] },
         },
-      ],
+      
       where:query,
     });
 
@@ -49,8 +49,8 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
    
-    const user = await Product.findByPk(req.params.id);
-    res.send(user);
+    const product = await Product.findByPk(req.params.id);
+    res.send(product);
   } catch (error) {
     console.log(error);
     next(error);
